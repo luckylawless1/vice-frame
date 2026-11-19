@@ -1,23 +1,91 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<title>VICE FRAME — GTA-style Cover Art Maker</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+<header class="topbar">
+  <div class="wordmark">VICE <span>FRAME</span></div>
+  <div class="topbar-right">
+    <span class="topbar-note">Offline cover studio — photos never leave this machine</span>
+    <button id="exportBtn" class="export-btn" type="button">Export PNG</button>
+  </div>
+</header>
+
+<main class="workspace">
+  <aside class="rail rail-left">
+    <section>
+      <h2>Photos</h2>
+      <label class="upload-btn" for="photoUpload">Add your photos</label>
+      <input id="photoUpload" type="file" accept="image/*" multiple hidden>
+      <div id="photoStrip" class="photo-strip"></div>
+      <p class="mini">Click a photo to drop it into the selected panel. The five samples are here to play with.</p>
+    </section>
+    <section>
+      <h2>Layout</h2>
+      <div class="btn-grid">
+        <button type="button" data-layout="cover-star">Cover Star</button>
+        <button type="button" data-layout="collage-four">Collage Four</button>
+        <button type="button" data-layout="panel-grid">Panel Grid</button>
+        <button type="button" data-layout="crew-wide">Crew Wide</button>
+      </div>
+    </section>
+    <section>
+      <h2>Post size</h2>
+      <div class="btn-grid">
+        <button type="button" data-size="square">Square 1080×1080</button>
+        <button type="button" data-size="portrait">Portrait 1080×1350</button>
+        <button type="button" data-size="landscape">Landscape 1920×1080</button>
+      </div>
+    </section>
+  </aside>
+
+  <section class="stage">
+    <canvas id="preview" width="1280" height="720"></canvas>
+    <p class="hint">Click a panel to select it — drag to move its photo, scroll or use the slider to zoom.</p>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
+
+  <aside class="rail rail-right">
+    <section>
+      <h2>Photo grade</h2>
+      <label class="field">Selected panel
+        <select id="gradeSelected"></select>
+      </label>
+      <label class="field">Apply to all panels
+        <select id="gradeAll"></select>
+      </label>
+    </section>
+    <section>
+      <h2>Lettering</h2>
+      <label class="field">Title
+        <input id="titleInput" type="text" maxlength="40" autocomplete="off">
+      </label>
+      <label class="field">Tagline
+        <input id="taglineInput" type="text" maxlength="60" autocomplete="off">
+      </label>
+      <label class="field">Caption
+        <input id="captionInput" type="text" maxlength="60" autocomplete="off">
+      </label>
+    </section>
+    <section>
+      <h2>Stickers</h2>
+      <label class="check"><input type="checkbox" id="stickerPalm"> Palm tree</label>
+      <label class="check"><input type="checkbox" id="stickerBurst"> Starburst</label>
+      <label class="check"><input type="checkbox" id="stickerWanted"> Wanted stars</label>
+      <label class="check"><input type="checkbox" id="stickerSun"> Retro sun</label>
+      <label class="check"><input type="checkbox" id="grainCheck"> Film grain</label>
+    </section>
+    <section>
+      <h2>Photo zoom</h2>
+      <input id="zoomSlider" type="range" min="100" max="400" value="100" step="1">
+      <p class="mini">Zooms the selected panel's photo.</p>
+    </section>
+  </aside>
 </main>
+
 <script type="module" src="./src/main.js"></script>
 </body>
 </html>
